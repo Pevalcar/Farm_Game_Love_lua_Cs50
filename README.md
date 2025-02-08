@@ -12,6 +12,14 @@ This game is creted with [LOVE](https://love2d.org/) and [VSCode](https://code.v
 -   [VSCode](https://code.visualstudio.com/)
 -   [Aseprite](https://www.aseprite.org/)
 
+## Features
+
+-   farming system
+-   crops
+-   gardens grid
+-   save and load game
+-   spritesheets
+
 ## Credits
 
 I use Hana Caraka - Farming n Foraging Made by: Otterisk :

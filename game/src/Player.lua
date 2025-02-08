@@ -30,6 +30,9 @@ function Player:save()
 end
 
 function Player:load(data)
+    if data == nil then
+        return
+    end
     self.lvlOfHarvest = data.lvlOfHarvest
     self.xp = data.xp
     self.nextlvl = data.nextlvl

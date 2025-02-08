@@ -46,13 +46,12 @@ end
 
 function save()
     -- save data
-    data = {}
+    local data = {}
     -- data player save
     data.player = Player:save()
 
     -- data garden save
     data.garden = Garden_Grid:save()
-
     serialized = lume.serialize(data)
     love.filesystem.write("save.txt", serialized)
 end
@@ -64,5 +63,7 @@ function load()
 
     --- add player data 
     Player:load(data.player)
+    -- add garden data
+    Garden_Grid:load(data.garden)
 
 end

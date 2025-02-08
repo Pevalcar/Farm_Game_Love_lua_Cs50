@@ -1,12 +1,13 @@
 GardenCell = Object:extend()
 
 function GardenCell:new(x, y, crop)
+    self.crop = crop
+    self.initial_x = x
+    self.initial_y = y
+
     self.Cell_x_size = 16 * 3
     self.Cell_y_size = 16 * 3
-
-    self.x = x * self.Cell_x_size + 150 + (10 * (x - 1))
-    self.y = y * self.Cell_y_size + 150 + (10 * (y - 1))
-    self.crop = crop
+    self:updateposition()
     self.img = love.graphics.newImage("assets/img/misc.png")
     self.img:setFilter("nearest", "nearest")
     self.width = self.img:getWidth() / 3
@@ -63,9 +64,23 @@ end
 
 function GardenCell:save()
     -- save data
-    data = {}
-    data.x = self.x
-    data.y = self.y
+    local data = {}
+    data.x = self.initial_x
+    data.y = self.initial_y
     data.crop = self.crop:save()
     return data
+end
+
+function GardenCell:load(data)
+
+    self.initial_x = data.x
+    self.initial_y = data.y
+    self:setCrop(data.crop.crop_info)
+    self.crop:load(data.crop)
+end
+
+function GardenCell:updateposition()
+    self.x = self.initial_x * self.Cell_x_size + 150 + (10 * (self.initial_x - 1))
+    self.y = self.initial_y * self.Cell_y_size + 150 + (10 * (self.initial_y - 1))
+
 end

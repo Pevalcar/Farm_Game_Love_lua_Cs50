@@ -80,19 +80,36 @@ end
 
 function GardenGrid:save()
     -- save data
-    data = {}
+    local data = {}
     data.x = self.Size_x
     data.y = self.Size_y
     data.crop_timer = self.crop_timer
     data.Garden_Grid = {}
     for i, gardenCell in ipairs(self.Garden_Grid) do
+
         if gardenCell.crop ~= nil then
-            data.Garden_Grid[i] = gardenCell:save()
+            local crop = gardenCell:save()
+            data.Garden_Grid[i] = crop
         else
-            data.Garden_Grid[i] = nil
+            data.Garden_Grid[i] = "empty"
         end
     end
-    print(data)
 
     -- serialized = lume.serialize(data)
+    return data
+end
+
+function GardenGrid:load(data)
+    if data == nil then
+        return
+    end
+    self.Size_x = data.x
+    self.Size_y = data.y
+    self.crop_timer = data.crop_timer
+    for _, gardenCell in ipairs(data.Garden_Grid) do
+        if gardenCell ~= "empty" then
+            self.Garden_Grid[_]:load(gardenCell)
+        end
+    end
+
 end

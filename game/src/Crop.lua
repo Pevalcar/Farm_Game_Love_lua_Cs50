@@ -7,12 +7,11 @@ function Crop:new(crop_info, father)
     self.crop_info = crop_info
     self.crop_image = love.graphics.newImage(self.crop_info.img)
     self.crop_image:setFilter("nearest", "nearest")
-    self.grow_time_sec = crop_info.grow_time_sec
+    self.grow_time_sec = self.crop_info.grow_time_sec
     self.grow = 3
     self.frames = {}
     self.Harvesting = false
     self.harvest_time = crop_info.harvest_time
-    self.harves_speed = 1
     self.width = self.crop_image:getWidth() / 5
     self.height = self.crop_image:getHeight()
 
@@ -109,5 +108,15 @@ end
 
 function Crop:save()
     -- save data
-    return self.crop_info
+    local data = {}
+    data.crop_info = self.crop_info
+    data.grow_time_sec = self.grow_time_sec
+    data.grow = self.grow
+
+    return data
+end
+
+function Crop:load(data)
+    self.grow_time_sec = data.grow_time_sec
+    self.grow = data.grow
 end
