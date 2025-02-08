@@ -19,6 +19,7 @@ This game is creted with [LOVE](https://love2d.org/) and [VSCode](https://code.v
 -   gardens grid
 -   save and load game
 -   spritesheets
+-   tool lvls
 
 ## Credits
 

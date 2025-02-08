@@ -6,6 +6,11 @@ function GardenGrid:new(Size_x, Size_y)
     self.Size_x = Size_x
     self.Size_y = Size_y
     self.crop_timer = math.random(1, 10)
+    -- load Json file crops
+    file = assert(io.open("assets/data/crops.json", "r"))
+    local constent = file:read("*a")
+    file:close()
+    Crops_lib_info = json.decode(constent)
 
     -- Create Garden 
     for i = 1, Size_x do
@@ -37,7 +42,7 @@ function GardenGrid:update(dt)
                 if gardeCell:Hover() then
                     if gardeCell.crop:isHavester() then
                         -- por ahora solo reinicia todo
-                        gardeCell.crop:harvestCrop(Player.lvlOfHarvest)
+                        gardeCell.crop:harvestCrop(Player.lvlOfHarvest * SpeedMultiplier)
                     end
                 end
             end

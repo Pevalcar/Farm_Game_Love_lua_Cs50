@@ -1,0 +1,63 @@
+[
+	{
+		"name": "Wooden Hoe",
+		"lvl": 1,
+		"img": "",
+		"price": 50,
+		"multiplier": 0.5,
+
+		"rarity": "common"
+	},
+	{
+		"name": "Stone Hoe",
+		"lvl": 2,
+		"img": "",
+		"price": 200,
+		"multiplier": 1.0,
+
+		"rarity": "common"
+	},
+	{
+		"name": "Iron Hoe",
+		"lvl": 3,
+		"img": "",
+		"price": 750,
+		"multiplier": 1.5,
+
+		"rarity": "uncommon"
+	},
+	{
+		"name": "Golden Hoe",
+		"lvl": 4,
+		"img": "",
+		"price": 2000,
+		"multiplier": 2.0,
+
+		"rarity": "rare"
+	},
+	{
+		"name": "Diamond Hoe",
+		"lvl": 5,
+		"img": "",
+		"price": 5000,
+		"multiplier": 2.5,
+
+		"rarity": "epic"
+	},
+	{
+		"name": "Obsidian Hoe",
+		"lvl": 6,
+		"img": "",
+		"price": 12000,
+		"multiplier": 3.0,
+		"rarity": "legendary"
+	},
+	{
+		"name": "Celestial Hoe",
+		"lvl": 7,
+		"img": "",
+		"price": 30000,
+		"multiplier": 3.5,
+		"rarity": "legendary"
+	}
+]

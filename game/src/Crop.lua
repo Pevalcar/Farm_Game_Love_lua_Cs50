@@ -83,7 +83,7 @@ function Crop:harvestCrop(lvlOfHarvest)
     end
     -- posicion que quiera darle luego
     Player.Harvesting = true
-    self.harvest_time = self.crop_info.harvest_time - (lvlOfHarvest * 0.5)
+    self.harvest_time = self.crop_info.harvest_time - lvlOfHarvest
     self.Harvesting = true
 end
 
@@ -96,10 +96,8 @@ function Crop:Harvest()
     self.harvest_time = self.crop_info.harvest_time
     self.Harvesting = false
     Player.Harvesting = false
-    Player:UpdateExp(self.crop_info.exp)
-    self.grow = 3
+    Player:UpdateCrops(self.crop_info)
     self.father:setCrop(nil)
-
 end
 
 function Crop:drawLoadingScreen(progress)

@@ -1,8 +1,6 @@
 {
-	"Lua.workspace.library": [
-		"${3rd}/love2d/library",
-		"lib"
-	],
+	"Lua.workspace.library": ["${3rd}/love2d/library", "lib"],
 	"Lua.runtime.version": "LuaJIT",
 	"Lua.workspace.checkThirdParty": false,
+	"Lua.diagnostics.globals": ["save"]
 }
