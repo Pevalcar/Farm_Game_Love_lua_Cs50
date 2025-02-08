@@ -1,0 +1,56 @@
+[
+	{
+		"name": "carrot",
+		"x": 0,
+		"y": 0,
+		"img": "assets/img/crops/carrot.png",
+		"grow_time_sec": 0.5,
+		"harvest_time": 5,
+		"exp": 10
+	},
+	{
+		"name": "onion",
+		"x": 0,
+		"y": 0,
+		"img": "assets/img/crops/onion.png",
+		"grow_time_sec": 15,
+		"harvest_time": 10,
+		"exp": 20
+	},
+	{
+		"name": "potato",
+		"x": 0,
+		"y": 0,
+		"img": "assets/img/crops/potato.png",
+		"grow_time_sec": 5,
+		"harvest_time": 15,
+		"exp": 30
+	},
+	{
+		"name": "radish",
+		"x": 0,
+		"y": 0,
+		"img": "assets/img/crops/radish.png",
+		"grow_time_sec": 9,
+		"harvest_time": 20,
+		"exp": 15
+	},
+	{
+		"name": "spinach",
+		"x": 0,
+		"y": 0,
+		"img": "assets/img/crops/spinach.png",
+		"grow_time_sec": 15,
+		"harvest_time": 25,
+		"exp": 40
+	},
+	{
+		"name": "turnip",
+		"x": 0,
+		"y": 0,
+		"img": "assets/img/crops/turnip.png",
+		"grow_time_sec": 50,
+		"harvest_time": 30,
+		"exp": 50
+	}
+]
