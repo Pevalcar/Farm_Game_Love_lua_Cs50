@@ -37,7 +37,6 @@ function GardenGrid:update(dt)
                 if gardeCell:Hover() then
                     if gardeCell.crop:isHavester() then
                         -- por ahora solo reinicia todo
-                        Player.Harvestting = true
                         gardeCell.crop:harvestCrop(Player.lvlOfHarvest)
                     end
                 end
@@ -77,4 +76,23 @@ function GardenGrid:draw()
     end
     love.graphics.print("Crops left: " .. self.crop_timer, 10, 10)
 
+end
+
+function GardenGrid:save()
+    -- save data
+    data = {}
+    data.x = self.Size_x
+    data.y = self.Size_y
+    data.crop_timer = self.crop_timer
+    data.Garden_Grid = {}
+    for i, gardenCell in ipairs(self.Garden_Grid) do
+        if gardenCell.crop ~= nil then
+            data.Garden_Grid[i] = gardenCell:save()
+        else
+            data.Garden_Grid[i] = nil
+        end
+    end
+    print(data)
+
+    -- serialized = lume.serialize(data)
 end

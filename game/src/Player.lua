@@ -1,8 +1,6 @@
 Player = Object:extend()
 
 function Player:new()
-    self.x = 0
-    self.y = 0
     self.lvlOfHarvest = 1
     self.xp = 0
     self.nextlvl = 100
@@ -10,7 +8,7 @@ function Player:new()
 end
 
 function Player:UpdateExp(mount)
-    self.xp = self.xp + 80
+    self.xp = self.xp + mount
 
     -- lvl up self harvest
     if self.xp >= self.nextlvl then
@@ -20,4 +18,20 @@ function Player:UpdateExp(mount)
 
     end
 
+end
+
+function Player:save()
+    return {
+        lvlOfHarvest = self.lvlOfHarvest,
+        xp = self.xp,
+        nextlvl = self.nextlvl,
+        Harvesting = self.Harvesting
+    }
+end
+
+function Player:load(data)
+    self.lvlOfHarvest = data.lvlOfHarvest
+    self.xp = data.xp
+    self.nextlvl = data.nextlvl
+    self.Harvesting = data.Harvesting
 end

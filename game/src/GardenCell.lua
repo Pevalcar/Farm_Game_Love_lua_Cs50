@@ -61,3 +61,11 @@ function GardenCell:setCrop(crop_info)
     self.crop = Crop(newCrop, self)
 end
 
+function GardenCell:save()
+    -- save data
+    data = {}
+    data.x = self.x
+    data.y = self.y
+    data.crop = self.crop:save()
+    return data
+end

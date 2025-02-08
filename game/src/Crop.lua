@@ -107,3 +107,7 @@ function Crop:drawLoadingScreen(progress)
     self.circle_bar:draw(progress)
 end
 
+function Crop:save()
+    -- save data
+    return self.crop_info
+end
