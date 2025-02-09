@@ -7,6 +7,7 @@
 		"grow_time_sec": 5,
 		"harvest_time": 5,
 		"exp": 10,
+		"mod": 0,
 		"coins": 10
 	},
 	{
@@ -17,6 +18,7 @@
 		"grow_time_sec": 15,
 		"harvest_time": 10,
 		"exp": 20,
+		"mod": 0,
 		"coins": 25
 	},
 	{
@@ -27,6 +29,7 @@
 		"grow_time_sec": 20,
 		"harvest_time": 15,
 		"exp": 30,
+		"mod": 0,
 		"coins": 30
 	},
 	{
@@ -37,6 +40,7 @@
 		"grow_time_sec": 25,
 		"harvest_time": 20,
 		"exp": 15,
+		"mod": 0,
 		"coins": 35
 	},
 	{
@@ -47,6 +51,7 @@
 		"grow_time_sec": 35,
 		"harvest_time": 25,
 		"exp": 40,
+		"mod": 0,
 		"coins": 50
 	},
 	{
@@ -57,6 +62,7 @@
 		"grow_time_sec": 50,
 		"harvest_time": 30,
 		"exp": 50,
+		"mod": 0,
 		"coins": 75
 	}
 ]

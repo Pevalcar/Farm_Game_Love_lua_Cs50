@@ -81,7 +81,9 @@ function GardenCell:load(data)
 end
 
 function GardenCell:updateposition()
-    self.x = self.initial_x * self.Cell_x_size + 150 + (10 * (self.initial_x - 1))
-    self.y = self.initial_y * self.Cell_y_size + 150 + (10 * (self.initial_y - 1))
+    local pos_x = 10
+    local pos_y = 100
+    self.x = self.initial_x * self.Cell_x_size + pos_x + (10 * (self.initial_x - 1))
+    self.y = self.initial_y * self.Cell_y_size + pos_y + (10 * (self.initial_y - 1))
 
 end

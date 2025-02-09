@@ -3,10 +3,13 @@ Hoe = Object:extend()
 function Hoe:new(hoe_lvl, father)
     self.Hoe = nil
     self.frame = hoe_lvl
+    -- hoe slot
+    self.hoe_slot_img = love.graphics.newImage("assets/img/inventory/inventoryslot.png")
+    -- location
+    self.x = 480
+    self.y = 20
     -- Hoe spritesheet
-
     self.img = love.graphics.newImage("assets/img/hoe/Hoes.png")
-
     self.img:setFilter("nearest", "nearest")
     self.width = self.img:getWidth() / 7
     self.height = self.img:getHeight()
@@ -26,7 +29,8 @@ function Hoe:new(hoe_lvl, father)
 end
 
 function Hoe:draw()
-    love.graphics.draw(self.img, self.frames[self.frame], self.x, self.y)
+    love.graphics.draw(self.hoe_slot_img, self.x, self.y, 0, 1.5, 1.5)
+    love.graphics.draw(self.img, self.frames[self.frame], self.x + 12, self.y + 12)
 end
 
 function Hoe:save()

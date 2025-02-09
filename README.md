@@ -11,6 +11,10 @@ This game is creted with [LOVE](https://love2d.org/) and [VSCode](https://code.v
 -   [LOVE](https://love2d.org/)
 -   [VSCode](https://code.visualstudio.com/)
 -   [Aseprite](https://www.aseprite.org/)
+-   [Lume lib](https://github.com/rxi/lume)
+-   [Love Frames lib](https://github.com/linux-man/LoveFrames)
+-   [json lib](https://github.com/rxi/json.lua)
+-   [classic lib](https://github.com/rxi/classic)
 
 ## Features
 

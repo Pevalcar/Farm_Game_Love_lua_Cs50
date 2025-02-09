@@ -9,6 +9,9 @@ function Player:new()
     self.inventory = {}
     self.Hoelvl = 1
     self.Hoe = Hoe(self.Hoelvl, self)
+    -- mods 
+    self.mods = {}
+
 end
 
 function Player:Update(dt)
@@ -30,6 +33,7 @@ function Player:UpdateCrops(crop_info)
             found = true
             break
         end
+
     end
 
     -- Si no se encontró en el inventario, agregarlo como nuevo
@@ -40,6 +44,8 @@ function Player:UpdateCrops(crop_info)
         })
     end
 
+    UI:updateInventory(self.inventory)
+
 end
 
 -- funtions for update
@@ -47,6 +53,7 @@ function Player:UpdateExp(mount)
     self.xp = self.xp + mount
 
     -- lvl up self harvest
+
     if self.xp >= self.nextLvl then
         self.xp = self.xp - self.nextLvl
         self.lvlOfHarvest = self.lvlOfHarvest + 1
@@ -54,19 +61,31 @@ function Player:UpdateExp(mount)
 
     end
 
+    UI:updateProgressBar(self.xp, self.nextLvl)
+    UI:updateLvlInfo(self.lvlOfHarvest)
+
 end
 function Player:AddCoins(coins)
     self.coins = self.coins + coins
-
+    UI:updateCoinsInfo(self.coins)
 end
 
-function Player:setHoe(lvl)
-    if lvl > 7 then
-        lvl = 7
+function Player:setHoe()
+    self.Hoelvl = self.Hoelvl + 1
+    if self.Hoelvl > 7 then
+        self.Hoelvl = 7
     end
 
-    self.Hoelvl = lvl
-    self.Hoe = Hoe(lvl, self)
+    self.Hoe = Hoe(self.Hoelvl, self)
+    UI:updateHoeInfo(self.Hoe.hoe_info)
+end
+
+function Player:addMod(crop_name, mod)
+    if self.mods[crop_name] == nil then
+        self.mods[crop_name] = mod
+    else
+        self.mods[crop_name] = self.mods[crop_name] + mod
+    end
 end
 
 function Player:save()
@@ -77,7 +96,8 @@ function Player:save()
         Harvesting = self.Harvesting,
         coins = self.coins,
         inventory = self.inventory,
-        Hoelvl = self.Hoelvl
+        Hoelvl = self.Hoelvl,
+        mods = self.mods
     }
 end
 
@@ -91,8 +111,12 @@ function Player:load(data)
     self.Harvesting = data.Harvesting
     self.coins = data.coins
     self.inventory = data.inventory
+    if data.mods ~= nil then
+        self.mods = data.mods
+    end
     if data.Hoelvl ~= nil then
         self.Hoelvl = data.Hoelvl
         self.Hoe = Hoe(self.Hoelvl, self)
     end
 end
+
