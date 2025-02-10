@@ -31,16 +31,24 @@ function Crop:new(crop_info, father)
     self.circle_bar = CircularBar(self.x + self.width * 2, self.y + self.height * 2)
 
     self:getFrames(self.frames, self.crop_image)
+    self.Text = loveframes.Create("text")
+    self.Text:SetPos(self.x, self.y + self.height * 3)
+    self.Text:SetText(math.floor(self.grow_time_sec) .. "s")
+    self.Text:SetVisible(false)
+    self.Text.Update = function(object, dt)
+        object:SetText("Finish in:" .. math.floor(self.harvest_time) .. "s")
+    end
 
 end
 
 function Crop:draw()
     love.graphics.draw(self.crop_image, self.frames[self.grow], self.x, self.y, 0, 3, 3)
     -- timer show 
+
     if self.Harvesting then
-        love.graphics.print("Harvesting in:" .. math.floor(self.harvest_time) .. "s", self.x,
-            self.y + self.height * 3 + 20)
         self:drawLoadingScreen(self.harvest_time / self.crop_info.harvest_time)
+        self.Text:SetVisible(self.Harvesting)
+
     end
 
 end
@@ -85,6 +93,7 @@ function Crop:harvestCrop(lvlOfHarvest)
     if Player.Harvesting == true then
         return
     end
+
     -- posicion que quiera darle luego
     local harvest_time_calc = self.crop_info.harvest_time - lvlOfHarvest * Player.Hoe.hoe_info.multiplier
     print(harvest_time_calc, lvlOfHarvest, self.crop_info.harvest_time)
@@ -107,6 +116,8 @@ function Crop:Harvest()
     self.Harvesting = false
     Player.Harvesting = false
     Player:UpdateCrops(self.crop_info)
+    self.Text:SetVisible(false)
+
     self.father:setCrop(nil)
 end
 

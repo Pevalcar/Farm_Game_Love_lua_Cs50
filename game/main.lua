@@ -37,10 +37,10 @@ function love.load()
 
     local frame = loveframes.Create("list")
     frame:SetPos(10, 10)
-    frame:SetSize(100, 40)
+    frame:SetSize(100, 80)
 
     local text = loveframes.Create("text", frame)
-    text:SetText("(F1) Save Game")
+    text:SetText("(F1) Save Game \n(F4) Delete Save Game")
     text:SetPos(20, 10)
     text:SetSize(100, 100)
 
@@ -118,6 +118,8 @@ function love.keypressed(key, scancode, isrepeat)
 
     if key == "f1" then
         save()
+    elseif key == "f4" then
+        love.filesystem.remove("save.txt")
     elseif IS_DEBUG then
         if key == "f2" then
             love.event.quit("restart")

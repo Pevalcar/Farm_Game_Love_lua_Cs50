@@ -24,6 +24,7 @@ This game is creted with [LOVE](https://love2d.org/) and [VSCode](https://code.v
 -   save and load game
 -   spritesheets
 -   tool lvls
+-   mods
 
 ## Credits
 
