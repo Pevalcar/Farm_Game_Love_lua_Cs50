@@ -10,7 +10,17 @@ function Player:new()
     self.Hoelvl = 1
     self.Hoe = Hoe(self.Hoelvl, self)
     -- mods 
-    self.mods = {}
+    self.mods = {
+        Soon = {
+            text = "Soon",
+            lvl = 1
+        },
+        Hoe = {
+            text = "Hoe",
+            lvl = 1
+        }
+
+    }
 
 end
 
@@ -24,7 +34,6 @@ function Player:UpdateCrops(crop_info)
         self.inventory = {}
     end
     self:UpdateExp(crop_info.exp)
-    self:AddCoins(crop_info.coins)
     -- if crop in inventory, add 1 to amount
     local found = false
     for _, item in ipairs(self.inventory) do
@@ -48,6 +57,21 @@ function Player:UpdateCrops(crop_info)
 
 end
 
+function Player:SellCrop(crop_info)
+
+    for i, item in ipairs(self.inventory) do
+        if item.crop_info.name == crop_info.name then
+            item.amount = item.amount - 1
+            if item.amount == 0 then
+                table.remove(self.inventory, i)
+            end
+            break
+        end
+    end
+    self:AddCoins(crop_info.coins)
+    UI:updateInventory(self.inventory)
+
+end
 -- funtions for update
 function Player:UpdateExp(mount)
     self.xp = self.xp + mount
@@ -77,6 +101,8 @@ function Player:setHoe()
     end
 
     self.Hoe = Hoe(self.Hoelvl, self)
+    Player.mods.Hoe.lvl = self.Hoelvl
+
     UI:updateHoeInfo(self.Hoe.hoe_info)
 end
 
@@ -113,6 +139,18 @@ function Player:load(data)
     self.inventory = data.inventory
     if data.mods ~= nil then
         self.mods = data.mods
+    else
+        self.mods = {
+            Soon = {
+                text = "Soon",
+                lvl = 1
+            },
+            Hoe = {
+                text = "Hoe",
+                lvl = 1
+            }
+
+        }
     end
     if data.Hoelvl ~= nil then
         self.Hoelvl = data.Hoelvl

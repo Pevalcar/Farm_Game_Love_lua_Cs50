@@ -20,12 +20,8 @@ function Hoe:new(hoe_lvl, father)
     end
 
     -- Load hoe info
-    file = assert(io.open("assets/data/hoes.json", "r"))
-    local constent = file:read("*a")
-    file:close()
-    self.Hoes_lib_info = json.decode(constent)
 
-    self.hoe_info = self.Hoes_lib_info[self.frame]
+    self.hoe_info = Hoes_lib_info[self.frame]
 end
 
 function Hoe:draw()

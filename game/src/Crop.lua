@@ -37,10 +37,6 @@ end
 function Crop:draw()
     love.graphics.draw(self.crop_image, self.frames[self.grow], self.x, self.y, 0, 3, 3)
     -- timer show 
-    love.graphics.print(math.floor(self.grow_time_sec) .. "s", self.x + self.width * 3 / 2, self.y + self.height * 3)
-    if self.isHavester(self) then
-        love.graphics.print("Harvester", self.x, self.y + self.height * 3 + 10)
-    end
     if self.Harvesting then
         love.graphics.print("Harvesting in:" .. math.floor(self.harvest_time) .. "s", self.x,
             self.y + self.height * 3 + 20)
@@ -90,12 +86,14 @@ function Crop:harvestCrop(lvlOfHarvest)
         return
     end
     -- posicion que quiera darle luego
-    Player.Harvesting = true
-    local harvest_time_calc = self.crop_info.harvest_time - lvlOfHarvest
-    if harvest_time_calc < 0.2 then
-        harvest_time_calc = 0
+    local harvest_time_calc = self.crop_info.harvest_time - lvlOfHarvest * Player.Hoe.hoe_info.multiplier
+    print(harvest_time_calc, lvlOfHarvest, self.crop_info.harvest_time)
+    if harvest_time_calc <= 0.2 then
+        harvest_time_calc = 0.2
     end
     self.harvest_time = harvest_time_calc
+    print(self.crop_info.name .. " harvesting in " .. self.harvest_time .. " sec")
+    Player.Harvesting = true
     self.Harvesting = true
 end
 

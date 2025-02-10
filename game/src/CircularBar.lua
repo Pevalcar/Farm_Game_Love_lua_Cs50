@@ -23,6 +23,9 @@ function CircularBar:draw(progress)
     end
 
     self.frame = math.floor(1 + (progress * 15))
+    if self.frame > 15 then
+        self.frame = 15
+    end
     love.graphics.draw(self.img_b, self.frames[self.frame], self.x, self.y, 0, 1.5, 1.5)
     -- animate hand move 
     local angle = math.sin(progress * math.pi * 6) * 0.2

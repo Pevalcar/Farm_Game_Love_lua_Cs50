@@ -79,7 +79,6 @@ function GardenGrid:draw()
     for i, gardeCell in ipairs(self.Garden_Grid) do
         gardeCell:draw()
     end
-    love.graphics.print("Crops left: " .. self.crop_timer, 10, 10)
 
 end
 

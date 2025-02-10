@@ -8,14 +8,6 @@ function UI:new()
 
 end
 
-function UI:draw()
-
-end
-
-function UI:update(dt)
-
-end
-
 function UI:drawPanel()
     local panel = self.parent.Create("image")
     panel:SetImage("assets/img/inventory/bg_inventory.png")
@@ -90,7 +82,7 @@ function UI:updateHoeInfo(hoe_info)
         love.graphics.setColor(255, 255, 255)
         self.hoe_name:SetDefaultColor(self:rarityColor(hoe_info.rarity))
     end
-
+    UI:updateMods(Player.mods)
 end
 
 function UI:rarityColor(rarity)
@@ -123,17 +115,15 @@ function UI:drawTabs()
 
     -- tabs:AddTab("Inventory", inventory_panel, "Inventory",
     --     love.graphics.newImage("assets/img/inventory/inventoryslot.png"))
-    tabs:AddTab("Inventory", self.inventory, "Inventory")
+    tabs:AddTab("Inventory", self.inventory, "Inventory", love.graphics.newImage("assets/img/inventory/chest.png"))
 
     -- mods tabs
-    local mods_panel = loveframes.Create("panel")
-    self.mods = loveframes.Create("text", mods_panel)
-    self.mods:SetText("Mods")
-    self.mods:SetAlwaysUpdate(true)
-    self.mods.Update = function(object, dt)
-        object:Center()
-    end
-    tabs:AddTab("Mods", mods_panel, "Mods")
+    self.mods_panel = loveframes.Create("list")
+    self.mods_panel:SetSpacing(20)
+    self.mods_panel:SetPadding(10)
+    self:updateMods(Player.mods)
+
+    tabs:AddTab("Mods", self.mods_panel, "Mods")
 
     -- for i = 1, 20 do
     --     local panel = loveframes.Create("panel")
@@ -147,34 +137,123 @@ function UI:drawTabs()
     -- end
 end
 
+function UI:updateMods(mods)
+
+    if self.mods_panel ~= nil then
+        self.mods_panel:Clear()
+        -- hoe title 
+        local hove_lvl = mods.Hoe.lvl + 1
+        if hove_lvl <= 7 then
+            self:drawTitle("Hoe")
+            local panel = loveframes.Create("list")
+            panel:SetSize(300, 71)
+            panel:EnableHorizontalStacking(true)
+            panel:SetSpacing(20)
+            panel:SetPadding(10)
+
+            local image = loveframes.Create("image", panel)
+            image:SetImage("assets/img/inventory/hoe/Hoes" .. hove_lvl .. ".png")
+            image:SetSize(30, 30)
+            image:SetScale(0.8, 0.8)
+
+            local text = loveframes.Create("text", panel)
+
+            local text_name = {{}, string.format("Upgrade to level %d", hove_lvl), {
+                color = {1, 1, 1, 1},
+                font = love.graphics.newFont(15)
+            }, "\n", {}, string.format("Cost: %d", Hoes_lib_info[hove_lvl].price)}
+            text:SetText(text_name)
+            text:SetSize(100, 0)
+            text:SetFont(love.graphics.newFont(15))
+            text:SetShadow(true)
+
+            local button = loveframes.Create("imagebutton", panel)
+            button:SetText("")
+            button:SetImage("assets/img/inventory/buy_button1.png")
+            button:SetFont(love.graphics.newFont(15))
+            button:SetSize(50, 35)
+            button.OnMouseEnter = function(object)
+                object:SetImage("assets/img/inventory/buy_button2.png")
+            end
+            button.OnMouseExit = function(object)
+                object:SetImage("assets/img/inventory/buy_button1.png")
+            end
+            button.Update = function(object)
+                if Player.coins >= Hoes_lib_info[hove_lvl].price then
+                    object:SetEnabled(true)
+                else
+                    object:SetEnabled(false)
+                    object:SetImage("assets/img/inventory/buy_button3.png")
+
+                end
+            end
+            button.OnClick = function(object)
+                Player:AddCoins(-Hoes_lib_info[hove_lvl].price)
+                Player:setHoe()
+            end
+
+            self.mods_panel:AddItem(panel)
+        end
+    end
+
+end
+
 function UI:updateInventory(inventory)
     if self.inventory ~= nil then
         self.inventory:Clear()
         for i, item in ipairs(inventory) do
-            local grid = loveframes.Create("grid")
-            grid:SetItemAutoSize(true)
-            grid:SetColumns(2)
-            grid:SetRows(1)
-            grid:SetCellSize(25, 25)
-            grid:SetCellPadding(5)
-            -- crop image 
-            local image = love.graphics.newImage(item.crop_info.img)
-            local frames = {}
-            image:setFilter("nearest", "nearest")
-            Crop:getFrames(frames, image)
-            local new_image = love.graphics.draw(image, frames[2], 0, 0, 0, 3, 3)
+            -- panel 
+            local panel = loveframes.Create("list")
+            panel:SetSize(300, 71)
+            panel:EnableHorizontalStacking(true)
+            panel:SetSpacing(20)
+            panel:SetPadding(10)
 
-            local text = loveframes.Create("text")
-            text:SetText(item.crop_info.name)
+            local image = loveframes.Create("image", panel)
+            local image_name = "assets/img/inventory/crops/" .. item.crop_info.name .. ".png"
+            image:SetImage(image_name)
+            image:SetSize(50, 30)
+            image:SetScale(2, 2)
+
+            local text = loveframes.Create("text", panel)
+
+            local crop_name = MyString.UpperCaseFirst(item.crop_info.name)
+
+            local text_name = string.format("%s \nAmount: %d \nPrice: %d", crop_name, item.amount, item.crop_info.coins)
+            text:SetText(text_name)
+            text:SetSize(100, 0)
             text:SetFont(love.graphics.newFont(15))
-            text:SetDefaultColor(self:rarityColor(item.crop_info.rarity))
             text:SetShadow(true)
 
-            -- grid:AddItem(new_image, 1, 1, "center")
-            grid:AddItem(text, 1, 2, "center")
+            local button = loveframes.Create("imagebutton", panel)
+            button:SetText("")
+            button:SetImage("assets/img/inventory/sell_button1.png")
+            button:SetFont(love.graphics.newFont(15))
+            button:SetSize(50, 35)
+            button.OnMouseEnter = function(object)
+                object:SetImage("assets/img/inventory/sell_button2.png")
+            end
+            button.OnMouseExit = function(object)
+                object:SetImage("assets/img/inventory/sell_button1.png")
+            end
+            button.OnClick = function(object)
+                Player:SellCrop(item.crop_info)
+            end
 
-            self.inventory:AddItem(grid)
+            self.inventory:AddItem(panel)
         end
     end
 
+end
+
+function UI:drawTitle(title)
+
+    local text_titel = loveframes.Create("text")
+    local text =
+        (string.format("-----------------------------------\n%s \n------------------------------------", title))
+    text_titel:SetText(text)
+    text_titel:SetSize(100, 0)
+    text_titel:SetFont(love.graphics.newFont(15))
+    text_titel:SetShadow(true)
+    self.mods_panel:AddItem(text_titel)
 end

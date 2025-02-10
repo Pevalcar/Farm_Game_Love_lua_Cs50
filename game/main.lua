@@ -16,6 +16,13 @@ function love.load()
     loveframes = require("lib/loveframes")
     loveframes.SetActiveSkin("Blue")
     require "src.UI.init"
+    MyString = require "lib.my_string"
+    -- Load hoe info
+    local file = assert(io.open("assets/data/hoes.json", "r"))
+    local constent = file:read("*a")
+    file:close()
+    Hoes_lib_info = json.decode(constent)
+
     Player = Player()
     -- create player
     -- Create crops garden grid
@@ -27,6 +34,33 @@ function love.load()
     SpeedMultiplier = 0.5 + Player.Hoe.hoe_info.multiplier
 
     UI = UI()
+
+    local frame = loveframes.Create("list")
+    frame:SetPos(10, 10)
+    frame:SetSize(100, 40)
+
+    local text = loveframes.Create("text", frame)
+    text:SetText("(F1) Save Game")
+    text:SetPos(20, 10)
+    text:SetSize(100, 100)
+
+    -- Credits 
+
+    frame = loveframes.Create("list")
+    frame:SetPos(10, 540)
+    frame:SetSize(200, 100)
+
+    local text2 = loveframes.Create("text", frame)
+    text2:SetText("Credits : Create by Pevalcar (2025)")
+    text2:SetPos(20, 10)
+    text2:SetSize(100, 100)
+    local button_github = loveframes.Create("button", frame)
+    button_github:SetText("Github")
+    button_github:SetPos(20, 10)
+    button_github:SetSize(30, 30)
+    button_github.OnClick = function(object)
+        love.system.openURL("https://github.com/Pevalcar/")
+    end
     if IS_DEBUG then
 
         mouse_position = loveframes.Create("text")
@@ -54,18 +88,6 @@ function love.draw()
     end
 
     Garden_Grid:draw()
-    love.graphics.setColor(255, 255, 255)
-
-    love.graphics.print("Player lvl harvest " .. Player.lvlOfHarvest, 100, 100)
-    love.graphics.print("Player exp  " .. Player.xp .. "/" .. Player.nextLvl, 100, 110)
-    love.graphics.print("Player coins  " .. Player.coins, 100, 120)
-    love.graphics.print("SpeedMultiplier - " .. SpeedMultiplier * Player.lvlOfHarvest .. " sec hoe name " ..
-                            Player.Hoe.hoe_info.name, 100, 130)
-    love.graphics.print("Player hoe lvl " .. Player.Hoelvl, 100, 140)
-    love.graphics.print("Player inventory", 100, 160)
-    for i, crop in pairs(Player.inventory) do
-        love.graphics.print(crop.crop_info.name .. " " .. crop.amount, 100, 170 + i * 20)
-    end
     -- draw button
 
     loveframes.draw()
